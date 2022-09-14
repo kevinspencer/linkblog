@@ -13,15 +13,32 @@
  
 use Data::Dumper;
 use WWW::Pinboard;
+use utf8::all;
 use strict;
 use warnings;
 
 $Data::Dumper::Indent = 1;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
-my $api = WWW::Pinboard->new(token => $token);
+my $token = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
 
-my $posts = $api->recent();
+my $pinboard = WWW::Pinboard->new(token => $token);
 
-print Dumper $posts;
+my $list = $pinboard->recent();
+
+# $VAR1 = {
+#   'description' => 'Nerd Fonts - Iconic font aggregator, glyphs/icons collection, & fonts patcher',
+#   'time' => '2022-09-12T18:41:48Z',
+#   'hash' => '3d6d99a5d6190c51ef24d7de94c2d4e7',
+#   'tags' => '',
+#   'meta' => '20251fb95fed9df18bc2945a04e606ad',
+#   'shared' => 'yes',
+#   'extended' => 'does what it says on the tin',
+#   'href' => 'https://www.nerdfonts.com/',
+#   'toread' => 'no'
+# };
+
+for my $post (@{$list->{posts}}) {
+    print "<a href=\"$post->{href}\">$post->{description}</a>\n";
+}
