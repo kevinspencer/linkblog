@@ -20,7 +20,6 @@ $Data::Dumper::Indent = 1;
 
 our $VERSION = '0.01';
 
-my $token = 'kevinspencer:BE2338298B80AAD0F793';
 my $api = WWW::Pinboard->new(token => $token);
 
 my $posts = $api->recent();
