@@ -22,14 +22,14 @@ use warnings;
 
 $Data::Dumper::Indent = 1;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
-my $token    = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
-my $finaldir = $ENV{LINKBLOG_DIR} or die "No linkblog directory found\n";
+my $token     = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
+my $final_dir = $ENV{LINKBLOG_DIR} or die "No linkblog directory found\n";
 
 my $pinboard = WWW::Pinboard->new(token => $token);
 
-my $list = $pinboard->recent(count => 25);
+my $list = $pinboard->recent(count => 30);
 
 die "Could not retrieve latest posts from pinboard!!\n" if (! $list);
 
@@ -96,6 +96,8 @@ while (<$ftfh>) {
 close($lbfh);
 close($ftfh);
 
+move($final_linkblog, $final_dir) || die "Couldn't move $final_linkblog to $final_dir - $!\n";
+
 sub format_time_ago_string {
     my ($timestamp_now, $timestamp_then) = @_;
 
@@ -116,5 +118,3 @@ sub format_time_ago_string {
         return $duration_string;
     }
 }
-
-
