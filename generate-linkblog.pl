@@ -19,13 +19,27 @@ use warnings;
 
 $Data::Dumper::Indent = 1;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 my $token = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
 
 my $pinboard = WWW::Pinboard->new(token => $token);
 
 my $list = $pinboard->recent();
+
+die "Could not retrieve latest posts from pinboard!!\n" if (! $list);
+
+my $header_template = 'linkblog-header.html';
+my $footer_template = 'linkblog-footer.html';
+my $final_linkblog  = 'index.html';
+
+open(my $lbfh, '>', $final_linkblog)  || die "Could not create $final_linkblog - $!\n";
+open(my $htfh, '<', $header_template) || die "Could not open $header_template - $!\n";
+open(my $ftfh, '<', $footer_template) || die "Could not open $footer_template - $!\n";
+
+print $lbfh $_ while(<$htfh>);
+
+close($htfh);
 
 # $VAR1 = {
 #   'description' => 'Nerd Fonts - Iconic font aggregator, glyphs/icons collection, & fonts patcher',
@@ -39,6 +53,22 @@ my $list = $pinboard->recent();
 #   'toread' => 'no'
 # };
 
+print $lbfh "<ul class=\"wppb-bookmarks\">\n";
+
 for my $post (@{$list->{posts}}) {
-    print "<a href=\"$post->{href}\">$post->{description}</a>\n";
+    print $lbfh "    <li class=\"wppb-bookmark\">\n";
+    print $lbfh "        <div class=\"wppb-header\"><a class=\"wppb-title\" href=\"$post->{href}\"><i class=\"fa fa-star\"></i> $post->{description}</a></div>\n";
+    print $lbfh "        <div class=\"wppb-description\">$post->{extended}</div>\n";
+    print $lbfh "        <div class=\"wppb-footer\">\n";
+    print $lbfh "            <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n";
+    print $lbfh "            <abbr class=\"wppb-date\" title=\"$post->{time}\">6 days ago</abbr>\n";
+    print $lbfh "        </div>\n";
+    print $lbfh "    </li>\n";
 }
+
+print $lbfh "</ul>\n";
+
+print $lbfh $_ while(<$ftfh>);
+
+close($lbfh);
+close($ftfh);
