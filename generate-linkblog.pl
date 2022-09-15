@@ -25,7 +25,7 @@ my $token = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
 
 my $pinboard = WWW::Pinboard->new(token => $token);
 
-my $list = $pinboard->recent();
+my $list = $pinboard->recent(count => 25);
 
 die "Could not retrieve latest posts from pinboard!!\n" if (! $list);
 
