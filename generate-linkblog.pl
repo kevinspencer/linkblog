@@ -22,7 +22,7 @@ use warnings;
 
 $Data::Dumper::Indent = 1;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 my $token     = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
 my $final_dir = $ENV{LINKBLOG_DIR} or die "No linkblog directory found\n";
@@ -83,12 +83,12 @@ for my $post (@{$list->{posts}}) {
 
 print $lbfh "</ul>\n";
 
-my $now = lc(localtime());
+my $now_string = $dt1->day_abbr() . ', ' . $dt1->month_abbr() . ' ' . sprintf("%02d", $dt1->day()) . ', ' . $dt1->year() . ' ' . sprintf("%02d", $dt1->hour()) . ':' . sprintf("%02d", $dt1->min()) . ':' . sprintf("%02d", $dt1->second());
 
 while (<$ftfh>) {
     my $line = $_;
     if ($line =~ /RUNTIME/) {
-        $line =~ s/RUNTIME/$now/;
+        $line =~ s/RUNTIME/$now_string/;
     }
     print $lbfh $line;
 }
@@ -105,16 +105,20 @@ sub format_time_ago_string {
 
     my $duration_string;
     if ( $duration > ONE_YEAR ) {
-        $duration_string = sprintf "%d years ago", $duration / ONE_YEAR;
+        my $pluralization = int($duration / ONE_YEAR) == 1 ? 'year' : 'years';
+        $duration_string = sprintf "%d $pluralization ago", $duration / ONE_YEAR;
         return $duration_string;
     } elsif ($duration > ONE_DAY) {
-        $duration_string = sprintf "%d days ago", $duration / ONE_DAY;
+        my $pluralization = int($duration / ONE_DAY) == 1 ? 'day' : 'days';
+        $duration_string = sprintf "%d $pluralization ago", $duration / ONE_DAY;
         return $duration_string;
     } elsif ($duration > ONE_HOUR) {
-        $duration_string = sprintf "%d hours ago", $duration / ONE_HOUR;
+        my $pluralization = int($duration / ONE_HOUR) == 1 ? 'hour' : 'hours';
+        $duration_string = sprintf "%d $pluralization ago", $duration / ONE_HOUR;
         return $duration_string;
     } else {
-        $duration_string = sprintf "%d mins ago", $duration / ONE_MINUTE;
+        my $pluralization = int($duration / ONE_MINUTE) == 1 ? 'minute' : 'minutes';
+        $duration_string = sprintf "%d $pluralization ago", $duration / ONE_MINUTE;
         return $duration_string;
     }
 }
