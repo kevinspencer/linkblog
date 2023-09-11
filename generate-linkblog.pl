@@ -1,5 +1,5 @@
-#!/usr/bin/env perl
-# Copyright 2022 Kevin Spencer <kevin@kevinspencer.org>
+#!/usr/home/vek/perl5/perlbrew/perls/perl-5.14.4/bin/perl
+# Copyright 2022-2023 Kevin Spencer <kevin@kevinspencer.org>
 #
 # Permission to use, copy, modify, distribute, and sell this software and its
 # documentation for any purpose is hereby granted without fee, provided that
@@ -22,7 +22,7 @@ use warnings;
 
 $Data::Dumper::Indent = 1;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 my $token     = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
 my $final_dir = $ENV{LINKBLOG_DIR} or die "No linkblog directory found\n";
@@ -72,7 +72,7 @@ for my $post (@{$list->{posts}}) {
     my $time_ago_string = format_time_ago_string($dt1->epoch(), $dt2->epoch());
 
     print $lbfh "    <li class=\"wppb-bookmark\">\n";
-    print $lbfh "        <div class=\"wppb-header\"><a class=\"wppb-title\" href=\"$post->{href}\"><i class=\"fa fa-star\"></i> $post->{description}</a></div>\n";
+    print $lbfh "        <div class=\"wppb-header\"><a class=\"wppb-title\" href=\"$post->{href}\"><i class=\"fa-solid fa-right-long\"></i> $post->{description}</a></div>\n";
     print $lbfh "        <div class=\"wppb-description\">$post->{extended}</div>\n";
     print $lbfh "        <div class=\"wppb-footer\">\n";
     print $lbfh "            <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n";
