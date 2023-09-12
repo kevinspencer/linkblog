@@ -22,7 +22,7 @@ use warnings;
 
 $Data::Dumper::Indent = 1;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 my $token     = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
 my $final_dir = $ENV{LINKBLOG_DIR} or die "No linkblog directory found\n";
@@ -44,6 +44,22 @@ open(my $ftfh, '<', $footer_template) || die "Could not open $footer_template - 
 print $lbfh $_ while(<$htfh>);
 
 close($htfh);
+
+my @title_icons = (
+    'fa-solid fa-right-long',
+    'fa-solid fa-shower',
+    'fa-solid fa-rocket',
+    'fa-solid fa-mug-saucer',
+    'fa-solid fa-sun',
+    'fa-solid fa-star',
+    'fa-solid fa-hippo',
+    'fa-solid fa-cloud',
+    'fa-solid fa-moon',
+    'fa-solid fa-robot',
+    'fa-solid fa-mountain-city',
+    'fa-solid fa-tree',
+    'fa-solid fa-fire',
+);
 
 # $VAR1 = {
 #   'description' => 'Nerd Fonts - Iconic font aggregator, glyphs/icons collection, & fonts patcher',
@@ -71,8 +87,10 @@ for my $post (@{$list->{posts}}) {
 
     my $time_ago_string = format_time_ago_string($dt1->epoch(), $dt2->epoch());
 
+    my $icon = $title_icons[rand(@title_icons)];
+
     print $lbfh "    <li class=\"wppb-bookmark\">\n";
-    print $lbfh "        <div class=\"wppb-header\"><a class=\"wppb-title\" href=\"$post->{href}\"><i class=\"fa-solid fa-right-long\"></i> $post->{description}</a></div>\n";
+    print $lbfh "        <div class=\"wppb-header\"><a class=\"wppb-title\" href=\"$post->{href}\"><i class=\"$icon\"></i> $post->{description}</a></div>\n";
     print $lbfh "        <div class=\"wppb-description\">$post->{extended}</div>\n";
     print $lbfh "        <div class=\"wppb-footer\">\n";
     print $lbfh "            <i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i>\n";
