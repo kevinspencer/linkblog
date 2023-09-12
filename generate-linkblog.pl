@@ -77,6 +77,8 @@ print $lbfh "<ul class=\"wppb-bookmarks\">\n";
 
 my $dt1 = DateTime->now(time_zone => 'America/Phoenix');
 
+my $previous_random_number;
+
 for my $post (@{$list->{posts}}) {
 
     my $dt2;
@@ -87,7 +89,18 @@ for my $post (@{$list->{posts}}) {
 
     my $time_ago_string = format_time_ago_string($dt1->epoch(), $dt2->epoch());
 
-    my $icon = $title_icons[rand(@title_icons)];
+    # so we don't get the same icon twice in a row...
+    my $current_random_number = int(rand(@title_icons));
+
+    if ($previous_random_number) {
+        until ($current_random_number != $previous_random_number) {
+            $current_random_number = int(rand(@title_icons));
+        }
+    }
+
+    $previous_random_number = $current_random_number;
+
+    my $icon = $title_icons[$current_random_number];
 
     print $lbfh "    <li class=\"wppb-bookmark\">\n";
     print $lbfh "        <div class=\"wppb-header\"><a class=\"wppb-title\" href=\"$post->{href}\"><i class=\"$icon\"></i> $post->{description}</a></div>\n";
