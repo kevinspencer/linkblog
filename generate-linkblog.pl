@@ -1,4 +1,4 @@
-#!/usr/home/vek/perl5/perlbrew/perls/perl-5.14.4/bin/perl
+#!/usr/home/muppet/perl5/perlbrew/perls/perl-5.36.1/bin/perl
 # Copyright 2022-2023 Kevin Spencer <kevin@kevinspencer.org>
 #
 # Permission to use, copy, modify, distribute, and sell this software and its
@@ -22,7 +22,7 @@ use warnings;
 
 $Data::Dumper::Indent = 1;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 my $token     = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
 my $final_dir = $ENV{LINKBLOG_DIR} or die "No linkblog directory found\n";
@@ -35,7 +35,7 @@ die "Could not retrieve latest posts from pinboard!!\n" if (! $list);
 
 my $header_template = 'linkblog-header.html';
 my $footer_template = 'linkblog-footer.html';
-my $final_linkblog  = 'index.html';
+my $final_linkblog  = 'index.php';
 
 open(my $lbfh, '>', $final_linkblog)  || die "Could not create $final_linkblog - $!\n";
 open(my $htfh, '<', $header_template) || die "Could not open $header_template - $!\n";
