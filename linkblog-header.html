@@ -43,6 +43,7 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 <link rel='stylesheet' id='swipebox-css'  href='https://kevinspencer.org/posts/wp-content/plugins/flickr-justified-gallery/lightboxes/swipebox/css/swipebox.min.css?ver=6.0.2' type='text/css' media='all' />
 <link rel='stylesheet' id='wp-pinboard-css'  href='https://kevinspencer.org/posts/wp-content/plugins/wp-pinboard/css/style.css?ver=6.0.2' type='text/css' media='all' />
 <link rel='stylesheet' id='less-style-css'  href='https://kevinspencer.org/posts/wp-content/themes/Less/style.css?ver=all' type='text/css' media='all' />
+<link rel='stylesheet' id='less-style-css'  href='https://kevinspencer.org/posts/wp-content/themes/Less/dark.css?ver=all' type='text/css' media='all' />
 <script type='text/javascript' src='https://kevinspencer.org/posts/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
 <script type='text/javascript' src='https://kevinspencer.org/posts/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
 <link rel="https://api.w.org/" href="https://kevinspencer.org/posts/wp-json/" /><link rel="alternate" type="application/json" href="https://kevinspencer.org/posts/wp-json/wp/v2/pages/1796" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://kevinspencer.org/posts/xmlrpc.php?rsd" />
@@ -52,6 +53,17 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 <link rel='shortlink' href='https://kevinspencer.org/posts/?p=1796' />
 <link rel="alternate" type="application/json+oembed" href="https://kevinspencer.org/posts/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fkevinspencer.org%2Fposts%2Flinkblog%2F" />
 <link rel="alternate" type="text/xml+oembed" href="https://kevinspencer.org/posts/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fkevinspencer.org%2Fposts%2Flinkblog%2F&#038;format=xml" />
+
+<script>
+  // This script prevents the theme from flickering on load
+  (function() {
+    const theme = localStorage.getItem('theme');
+    if (theme !== 'light') {
+      // If theme is 'dark' or not set, add 'dark' class to <html>
+      document.documentElement.classList.add('dark');
+    }
+  })();
+</script>
 
 </head>
 
