@@ -73,7 +73,7 @@ my @title_icons = (
 #   'toread' => 'no'
 # };
 
-print $lbfh "<ul class=\"wppb-bookmarks\">\n";
+print $lbfh "<ul style=\"list-style-type: none;\" class=\"wppb-bookmarks\">\n";
 
 my $dt1 = DateTime->now(time_zone => 'America/Phoenix');
 
