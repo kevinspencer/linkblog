@@ -1,5 +1,5 @@
 #!/usr/home/muppet/perl5/perlbrew/perls/perl-5.36.1/bin/perl
-# Copyright 2022-2023 Kevin Spencer <kevin@kevinspencer.org>
+# Copyright 2022-2026 Kevin Spencer <kevin@kevinspencer.org>
 #
 # Permission to use, copy, modify, distribute, and sell this software and its
 # documentation for any purpose is hereby granted without fee, provided that
@@ -11,7 +11,6 @@
 #
 ################################################################################
  
-use Data::Dumper;
 use DateTime;
 use File::Copy;
 use Time::Seconds;
@@ -20,9 +19,7 @@ use utf8::all;
 use strict;
 use warnings;
 
-$Data::Dumper::Indent = 1;
-
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 my $token     = $ENV{PINBOARD_TOKEN} or die "No pinboard API token found\n";
 my $final_dir = $ENV{LINKBLOG_DIR} or die "No linkblog directory found\n";
